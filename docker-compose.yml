@@ -30,6 +30,22 @@ services:
             - .env
         networks: 
             - backend
+    grafana:
+        build: ./grafana
+        container_name: grafana
+        ports: 
+            - 3000:$3000
+        links:
+            - influxdb
+        volumes:
+            - /var/lib/grafana
+            - /var/log/grafana
+            - /var/lib/grafana/plugins
+        restart: always
+        env_file:
+            - .env
+        networks:
+            - frontend
 networks:
     frontend:
     backend:
