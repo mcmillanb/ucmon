@@ -15,7 +15,20 @@ services:
         networks:
             - frontend
             - backend
-
+    telegraf:
+        build: ./telegraf
+        container_name: telegraf
+        links:
+            - influxdb
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /proc:/hostfs/proc
+        privileged: true
+        restart: always
+        env_file:
+            - .env
+        networks: 
+            - backend
 networks:
     frontend:
     backend:
