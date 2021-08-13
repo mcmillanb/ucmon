@@ -29,5 +29,8 @@ echo "Token is $token"
 echo "INFLUX_TOKEN=$token" >> .env
 echo "INFLUX_HOST=http://influxdb:8086" >> .env
 echo "INFLUX_ORG=$org" >> .env
+echo "Restarting services"
+docker-compose down
+docker-compose up -d
 
 fi
