@@ -17,5 +17,5 @@ services:
             - backend
 
 networks:
-    ucmon:
+    frontend:
     backend:
