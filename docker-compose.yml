@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    influxdb:
+        build: ./influxdbv2
+        container_name: influxdb
+        ports:
+            - ${INFLUXDB_PORT}:${INFLUXDB_PORT}
+        volumes:
+            - $PWD/influxdb2/data:/var/lib/influxdb2
+            - $PWD/influxdb2/config:/etc/influxdb2
+        restart: always
+        env_file:
+            - .env
+        networks:
+            - ucmon
+            - backend
+
+networks:
+    ucmon:
+    backend:
