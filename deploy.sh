@@ -20,9 +20,15 @@ echo "INFLUXDB_PORT=8086" >> .env
 echo "Initial build - please wait"
 docker-compose up -d
 echo "InfluxDB runnning, getting keys"
-sleep 20
+influx_op="1"
+while influx_op="1"
+sleep 2
 influx_op=$(docker exec -it influxdb influx auth list)
+echo "."
+done
+echo "$influx_op"
 testVar=$(echo $influx_op | sed -e 's/\r//g')
+echo "$testVar"
 token=$(echo $testVar | grep -o -P '(?<=s Token ).*(?= $user)')
 echo "Token is $token"
 echo "INFLUX_TOKEN=$token" >> .env
