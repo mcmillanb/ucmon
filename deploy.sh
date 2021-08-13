@@ -17,5 +17,13 @@ read org
 echo "DOCKER_INFLUXDB_INIT_ORG=$org" >> .env
 echo "DOCKER_INFLUXDB_INIT_BUCKET=ucmon" >> .env
 echo "INFLUXDB_PORT=8086" >> .env
+echo "/nInitial build - please wait"
+docker-compose up -d
+echo "Done"
+tester_one=$(docker exec -it influxdb influx auth list)
+[[ $tester_one =~ $pat ]]
+echo "${BASH_REMATCH[1]}"
+
+
 #docker run -d -p 8086:8086 --network ucmon --name=influxdb -v $PWD/influxdb2/data:/var/lib/influxdb2 -v $PWD/influxdb2/config:/etc/influxdb2 -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=$user -e DOCKER_INFLUXDB_INIT_PASSWORD=$password -e DOCKER_INFLUXDB_INIT_ORG=$org -e DOCKER_INFLUXDB_INIT_BUCKET=ucmon influxdb:2.0.7-alpine
 fi
