@@ -19,9 +19,13 @@ echo "DOCKER_INFLUXDB_INIT_BUCKET=telegraf" >> .env
 echo "INFLUXDB_PORT=8086" >> .env
 echo "Initial build - please wait"
 docker-compose up -d
-pause 15
 echo "InfluxDB runnning, getting keys"
-influx_op=$(docker exec -it influxdb influx auth list)
+influx_op=""
+while influx_op=""
+do
+    sleep 2
+    influx_op=$(docker exec -it influxdb influx auth list)
+done
 testVar=$(echo $influx_op | sed -e 's/\r//g')
 token=$(echo $testVar | grep -o -P '(?<=s Token ).*(?= admin)')
 echo "Token is $token"
