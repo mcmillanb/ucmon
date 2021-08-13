@@ -22,9 +22,10 @@ docker-compose up -d
 echo "InfluxDB runnning, getting keys"
 influx_op="1"
 while influx_op="1"
-sleep 2
-influx_op=$(docker exec -it influxdb influx auth list)
-echo "."
+do
+    sleep 2
+    influx_op=$(docker exec -it influxdb influx auth list)
+    echo "."
 done
 echo "$influx_op"
 testVar=$(echo $influx_op | sed -e 's/\r//g')
