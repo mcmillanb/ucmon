@@ -5,10 +5,10 @@ services:
         build: ./influxdbv2
         container_name: influxdb
         ports:
-            - ${INFLUXDB_PORT}:${INFLUXDB_PORT}
+            - 8086:8086
         volumes:
-            - $PWD/influxdb2/data:/var/lib/influxdb2
-            - $PWD/influxdb2/config:/etc/influxdb2
+            - $PWD/influxdbv2/data:/var/lib/influxdb2
+            - $PWD/influxdbv2/config:/etc/influxdb2
         restart: always
         env_file:
             - .env
