@@ -2,7 +2,7 @@ version: "3"
 
 services:
     influxdb:
-#        build: ./influxdbv2
+        build: ./influxdbv2
         container_name: influxdb
         ports:
             - ${INFLUXDB_PORT}:${INFLUXDB_PORT}
