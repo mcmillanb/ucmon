@@ -6,10 +6,10 @@ else
 echo "File does not exist"
 touch .env
 echo "DOCKER_INFLUXDB_INIT_MODE=setup" >> .env
-echo "Enter username"
-read user
-echo "DOCKER_INFLUXDB_INIT_USERNAME=$user" >> .env
-echo "Enter Password (minimum 8 cahracters)"
+#echo "Enter username"
+#read user
+echo "DOCKER_INFLUXDB_INIT_USERNAME=admin" >> .env
+echo "Enter Password for admin user (minimum 8 cahracters)"
 read password
 echo "DOCKER_INFLUXDB_INIT_PASSWORD=$password" >> .env
 echo "Organisation?"
@@ -20,6 +20,7 @@ echo "INFLUXDB_PORT=8086" >> .env
 echo "Initial build - please wait"
 docker-compose up -d
 echo "InfluxDB runnning, getting keys"
+sleep 20
 x=1
 while [ $x -le 5 ]
 do
@@ -43,6 +44,9 @@ echo "Token is $token"
 echo "INFLUX_TOKEN=$token" >> .env
 echo "INFLUX_HOST=http://influxdb:8086" >> .env
 echo "INFLUX_ORG=$org" >> .env
+docker-compose down
+docker-compose up -d
+
 
 
 
