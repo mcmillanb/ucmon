@@ -7,7 +7,7 @@ echo "File does not exist"touch .env
 echo "DOCKER_INFLUXDB_INIT_MODE=setup" >> .env
 echo "Setting up admin user, enter username"
 read user
-echo "DOCKER_INFLUXDB_INIT_USERNAME=admin" >> .env
+echo "DOCKER_INFLUXDB_INIT_USERNAME=$user" >> .env
 echo "Enter Password (minimum 8 characters)"
 read password
 echo "DOCKER_INFLUXDB_INIT_PASSWORD=$password" >> .env
@@ -22,7 +22,7 @@ echo "InfluxDB runnning, getting keys"
 sleep 30
 influx_op=$(docker exec -it influxdb influx auth list)
 testVar=$(echo $influx_op | sed -e 's/\r//g')
-token="$(echo $testVar | grep -o -P '(?<=s Token ).*(?= $user)')"
+token=$(echo $testVar | grep -o -P "(?<=s Token ).*(?= $user)")
 echo "Token is $token"
 echo "INFLUX_TOKEN=$token" >> .env
 echo "INFLUX_HOST=http://influxdb:8086" >> .env
