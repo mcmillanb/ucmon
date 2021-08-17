@@ -15,7 +15,7 @@ echo "Organisation?"
 read org
 echo "DOCKER_INFLUXDB_INIT_ORG=$org" >> .env
 echo "DOCKER_INFLUXDB_INIT_BUCKET=telegraf" >> .env
-echo "INFLUXDB_PORT=8086" >> .env
+echo "INFLUX_PORT=8086" >> .env
 echo "Initial build - please wait"
 cp docker-compose.yml.1 docker-compose.yml
 docker-compose up -d
