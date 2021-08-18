@@ -51,15 +51,15 @@ docker-compose up -d
 echo "Waiting 30 seconds for services to start...."
 sleep 30
 #Configure grafana
-curl -X POST -H "Content-Type: application/json" -d '{"name":"test"}' http://admin:admin@localhost:3000/api/orgs
+curl -X POST -H "Content-Type: application/json" -d "{"name":"$org"}" http://admin:admin@localhost:3000/api/orgs
 curl -X POST http://admin:admin@localhost:3000/api/user/using/2
-curl -X POST --insecure -H "Content-Type: application/json" -d '{"orgId":2,"name":"InfluxDB","type":"influxdb","typeLogoUrl":"","access":"proxy","url":"http://influxdb:8086","password":"","user":"","database":"","basicAuth":false,"basicAuthUser":"","basicAuthPassword":"","withCredentials":false,"isDefault":false,"jsonData":{"defaultBucket":"telegraf","httpMode":"POST","organization":"test","version":"Flux"},"secureJsonData":{"token":"e1-xL5fcGfoj52iH9ZnHq5W1OhRP8ZP01V4y9SNtbxWwm4g-xWfEPViYNqaQus7Oa5eZV3tYV6-3MHdFEQywfg=="},"version":2,"readOnly":false}' http://admin:admin@localhost:3000/api/datasources
+curl -X POST --insecure -H "Content-Type: application/json" -d "{"orgId":2,"name":"InfluxDB","type":"influxdb","typeLogoUrl":"","access":"proxy","url":"http://influxdb:8086","password":"","user":"","database":"","basicAuth":false,"basicAuthUser":"","basicAuthPassword":"","withCredentials":false,"isDefault":false,"jsonData":{"defaultBucket":"telegraf","httpMode":"POST","organization":"$org","version":"Flux"},"secureJsonData":{"token":"$token"},"version":2,"readOnly":false}" http://admin:admin@localhost:3000/api/datasources
 if [ "$user" = "foo" ]; then
 echo "Setting password for admin user"
-curl -X PUT -H "Content-Type: application/json" -d '{"oldPassword": "admin","newPassword": "grafana123"}' http://admin:admin@localhost:3000/api/user/password
+curl -X PUT -H "Content-Type: application/json" -d "{"oldPassword": "admin","newPassword": "$password"}" http://admin:admin@localhost:3000/api/user/password
 else
 echo "Creating grafana user"
-curl -X POST -H "Content-Type: application/json" -d '{"name":"$user","email":"$user@graf.com","login":"Suser","password":"$password","OrgId": 2}' http://admin:admin@localhost:3000/api/admin/users
+curl -X POST -H "Content-Type: application/json" -d "{"name":"$user","email":"$user@graf.com","login":"$user","password":"$password","OrgId": 2}" http://admin:admin@localhost:3000/api/admin/users
 curl -X PUT -H "Content-Type: application/json" -d '{"isGrafanaAdmin": true}' http://admin:admin@localhost:3000/api/admin/users/2/permissions
 curl -X PATCH -H "Content-Type: application/json" -d '{"role":"Admin"}' http://admin:admin@localhost:3000/api/org/users/2
 fi
