@@ -29,6 +29,11 @@ echo "Setting up initial parameters"
 echo "INFLUX_TOKEN=$token" >> .env
 echo "INFLUX_HOST=influxdb" >> .env
 echo "INFLUX_ORG=$org" >> .env
+echo "GRAFANA_PORT=3000" >> .env
+echo "GRAFANA_USER=$user" >> .env
+echo "GRAFANA_PASSWORD=$password" >> .env
+echo "GRAFANA_PLUGINS_ENABLED=true" >> .env
+echo "GRAFANA_PLUGINS=grafana-piechart-panel" >> .env
 docker exec -it influxdb influx bucket create --name ucmon
 docker exec -it influxdb influx telegrafs create --name telegraf -f /etc/influxdb2/telegraf.conf
 
