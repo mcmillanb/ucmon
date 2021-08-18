@@ -48,7 +48,8 @@ docker-compose down
 rm docker-compose.yml
 cp docker-compose.yml.2 docker-compose.yml
 docker-compose up -d
-
+echo "Waiting 30 seconds for services to start...."
+sleep 30
 #Configure grafana
 curl -X POST -H "Content-Type: application/json" -d '{"name":"test"}' http://admin:admin@localhost:3000/api/orgs
 curl -X POST http://admin:admin@localhost:3000/api/user/using/2
